@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server : {
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": "https://whatsgram2-0-back.onrender.com",
     },
   }
 })
