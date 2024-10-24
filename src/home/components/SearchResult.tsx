@@ -12,8 +12,8 @@ interface User {
   username: string;
   email: string;
   profilepic?: string;
-  fullname: string; // Added this property
-  gender: string;   // Added this property
+  fullname: string; // Ensure this property is included
+  gender: string;   // Ensure this property is included
 }
 
 interface SearchResultsProps {
@@ -23,15 +23,15 @@ interface SearchResultsProps {
 const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
   const { setSelectedConversation } = userConversation();
 
-  const handleClick = async (user: User) => { // Changed 'any' to 'User'
+  const handleClick = async (user: User) => { // Ensure user is of type User
     console.log(user);
-    // Passing all required properties
+    // Passing a complete object with all required properties
     setSelectedConversation({
       fullname: user.fullname,
       _id: user._id,
       username: user.username,
       email: user.email,
-      profilepic: user.profilepic || "", // Defaulting to empty string if undefined
+      profilepic: user.profilepic || "", // Default to empty string if undefined
       gender: user.gender,
     });
   };
@@ -55,7 +55,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
               whileTap={{ scale: 0.98 }}
             >
               <Card 
-                onClick={() => handleClick(user)}
+                onClick={() => handleClick(user)} // user is correctly typed
                 className="cursor-pointer transition-colors hover:bg-gray-50"
               >
                 <CardContent className="p-4 flex items-center space-x-4">
