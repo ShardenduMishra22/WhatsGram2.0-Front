@@ -6,33 +6,23 @@ import userConversation from "../../zustand/useConversation.ts";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Updated User interface to include all required properties
-interface User {
-  _id: string;
-  username: string;
-  email: string;
-  profilepic?: string;
-  fullname: string; // Ensure this property is included
-  gender: string;   // Ensure this property is included
-}
-
 interface SearchResultsProps {
-  searchResults: User[];
+  searchResults: any[]; // Use any type for searchResults
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
   const { setSelectedConversation } = userConversation();
 
-  const handleClick = async (user: User) => { // Ensure user is of type User
+  const handleClick = async (user: any) => { // Use any type for user
     console.log(user);
     // Passing a complete object with all required properties
     setSelectedConversation({
-      fullname: user.fullname,
+      fullname: user.fullname || "", // Default to empty string if undefined
       _id: user._id,
       username: user.username,
       email: user.email,
       profilepic: user.profilepic || "", // Default to empty string if undefined
-      gender: user.gender,
+      gender: user.gender || "", // Default to empty string if undefined
     });
   };
 
@@ -45,7 +35,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
           exit={{ opacity: 0 }}
           className="max-h-96 overflow-y-auto space-y-2" // Set max height and enable vertical scrolling
         >
-          {searchResults.map((user) => (
+          {searchResults.map((user: any) => ( // Use any type for user
             <motion.div
               key={user._id}
               initial={{ opacity: 0, y: 20 }}
