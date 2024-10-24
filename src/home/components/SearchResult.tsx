@@ -6,12 +6,14 @@ import userConversation from "../../zustand/useConversation.ts";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 
-
+// Updated User interface to include all required properties
 interface User {
   _id: string;
   username: string;
   email: string;
   profilepic?: string;
+  fullname: string; // Added this property
+  gender: string;   // Added this property
 }
 
 interface SearchResultsProps {
@@ -21,9 +23,17 @@ interface SearchResultsProps {
 const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
   const { setSelectedConversation } = userConversation();
 
-  const handleClick = async (user : any) => {
+  const handleClick = async (user: User) => { // Changed 'any' to 'User'
     console.log(user);
-    setSelectedConversation(user);
+    // Passing all required properties
+    setSelectedConversation({
+      fullname: user.fullname,
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      profilepic: user.profilepic || "", // Defaulting to empty string if undefined
+      gender: user.gender,
+    });
   };
 
   return (
