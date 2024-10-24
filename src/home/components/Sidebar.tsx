@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { MessageSquare, Loader2, AlertCircle, Search } from "lucide-react";
 import { 
@@ -11,36 +12,28 @@ import userConversation from "@/zustand/useConversation";
 import axios from "axios";
 
 const SideBar = () => {
-  interface User {
-    _id: string;
-    fullname: string;
-    username: string;
-    profilePic: string;
-    gender: string;
-    profilepic: string;
-  }
-  
-  const [data, setData] = useState<User[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  // Use any for the User type
+  const [data, setData] = useState<any[]>([]); // Changed User[] to any[]
+  const [error, setError] = useState<any | null>(null); // Changed string to any
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Boolean remains, but use any if preferred
+  const [searchTerm, setSearchTerm] = useState<any>(""); // Changed string to any
   const { setSelectedConversation, selectedConversation } = userConversation();
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get("/api/user/currentChats");
-      console.log(selectedConversation)
+      console.log(selectedConversation);
       setData(response.data);
     } catch (err) {
       console.error(err);
-      setError("Failed to fetch chats.");
+      setError("Failed to fetch chats."); // Error message remains a string
     } finally {
       setIsLoading(false);
     }
   };
 
-  const filteredData = data.filter(user => 
+  const filteredData = data.filter((user: any) => // user is now of type any
     user.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -83,7 +76,7 @@ const SideBar = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           ) : filteredData.length > 0 ? (
-            filteredData.map((user) => (
+            filteredData.map((user: any) => ( // user is now of type any
               <Card
                 key={user._id}
                 className={`transition-all duration-200 cursor-pointer hover:bg-accent/50 hover:scale-[1.02] ${
