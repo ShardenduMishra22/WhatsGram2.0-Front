@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User as UserIcon, Mail, MessageSquare } from 'lucide-react';
@@ -5,16 +6,12 @@ import userConversation from "../../zustand/useConversation.ts";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 
+
 interface User {
   _id: string;
-  fullname: string;
   username: string;
   email: string;
-  gender: string;
-  profilepic: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  profilepic?: string;
 }
 
 interface SearchResultsProps {
@@ -24,7 +21,7 @@ interface SearchResultsProps {
 const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
   const { setSelectedConversation } = userConversation();
 
-  const handleClick = async (user: User) => {
+  const handleClick = async (user : any) => {
     console.log(user);
     setSelectedConversation(user);
   };
