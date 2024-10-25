@@ -184,7 +184,7 @@ const MessageBox = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   className={`flex ${
-                    msg.senderId === selectedConversation._id ? 'justify-end' : 'justify-start'
+                    msg.senderId === selectedConversation._id ? 'justify-start' : 'justify-end'
                   }`}
                 >
                   <div
